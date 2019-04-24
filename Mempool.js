@@ -6,7 +6,7 @@ export class Mempool {
     constructor() {
         this.mempool = [];
         this.timeoutRequests = [];
-    }
+    } 
 
     removeValidationRequest(walletAddress) {
         this.mempool = this.mempool.filter(val => val != walletAddress);
