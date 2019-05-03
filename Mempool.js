@@ -13,11 +13,20 @@ export class Mempool {
         clearTimeout(this.timeoutRequests[walletAddress]);
     }
 
-    addValidationRequest(walletAddress) {
+    addValidationRequest(walletAddress, requestTimeStamp) {
         this.mempool.push(walletAddress);
-        this.timeoutRequests[walletAddress]=setTimeout(function(){ this.removeValidationRequest(walletAddress) }, TimeoutRequestsWindowTime );
+        this.timeoutRequests[walletAddress]=setTimeout(function(){ this.removeValidationRequest(walletAddress) }, TimeoutRequestsWindowTime);
     }
 
     // validateRequest(param, param ...)
 
+}
+
+class MempoolEntry {
+    constructor(walletAddress, requestTimeStamp, validationWindow) {
+        this.walletAddress = walletAddress;
+        this.requestTimeStamp = requestTimeStamp;
+        this.validationWindow = validationWindow;
+        this.message = () => `${this.walletAddress}:${this.requestTimeStamp}:`;
+    }
 }
