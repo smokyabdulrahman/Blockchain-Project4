@@ -4,6 +4,11 @@ const check = require('express-validator/check');
 
 router.post('/', [
     check('address').isString()
-], blockchainService.createBlock);
+], mempoolService.addRequestValidation);
+
+router.post('/validate', [
+    check('address').isString(),
+    check('signature').isString()
+], mempoolService.validateRequest);
 
 module.exports = router;

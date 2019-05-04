@@ -7,6 +7,7 @@ app.use(bodyparser.json());
 
 // Register Blockchain router
 app.use('/requestValidation', require('./routes/requestValidation'));
+app.use('/message-signature', require('./routes/requestValidation'));
 app.use('/block', require('./routes/blockchain'));
 
 // Error handling
