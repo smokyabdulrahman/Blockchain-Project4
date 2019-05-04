@@ -18,8 +18,10 @@ export class Mempool {
     }
 
     addValidationRequest(walletAddress, requestTimeStamp) {
-        this.mempool.push(new MempoolEntry(walletAddress, requestTimeStamp, TimeoutRequestsWindowTime));
+        const mempoolEntry = new MempoolEntry(walletAddress, requestTimeStamp, TimeoutRequestsWindowTime);
+        this.mempool.push(mempoolEntry);
         this.timeoutRequests[walletAddress]=setTimeout(() => this.removeValidationRequest(walletAddress), TimeoutRequestsWindowTime);
+        return mempoolEntry;
     }
 
     getMempoolEntry(walletAddress) {

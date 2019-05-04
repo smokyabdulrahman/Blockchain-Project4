@@ -9,7 +9,9 @@ exports.addRequestValidation = (req, res, next) => {
     }
 
     // everything is fine now!
-    Mempool.addValidationRequest(req.body.address, Date.now());
+    const mempoolEntry = Mempool.addValidationRequest(req.body.address, Date.now());
+
+    res.json(mempoolEntry);
 }
 
 exports.validateRequest = (req, res, next) => {
