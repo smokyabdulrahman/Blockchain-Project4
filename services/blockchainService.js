@@ -9,7 +9,7 @@ exports.getBlock = function(req, res, next) {
         .catch(err => next(new Error(errors.messages.blockNotFound)));
 }
 
-exports.createBlock = function(req, res, next) {
+exports.createBlock = function(req, res, next) {    
     if (req.body.data === null || req.body.data === undefined || req.body.data === ''){
         next(new Error(errors.messages.blockHasNoData));
     }

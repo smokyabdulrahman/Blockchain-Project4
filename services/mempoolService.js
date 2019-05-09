@@ -1,8 +1,8 @@
 const Mempool = require('../Mempool').Mempool.instance;
 const Errors = require('../helpers/errors');
-const validationResult = require('express-validator/check');
+const { validationResult } = require('express-validator/check');
 
-exports.addRequestValidation = (req, res, next) => {
+exports.addRequestValidation = (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty) {
         res.send(422).json({ errors: errors.array() });
@@ -14,7 +14,7 @@ exports.addRequestValidation = (req, res, next) => {
     res.json(mempoolEntry);
 }
 
-exports.validateRequest = (req, res, next) => {
+exports.validateRequest = (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty) {
         res.send(422).json({ errors: errors.array() });

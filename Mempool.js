@@ -1,11 +1,15 @@
 const bitcoinMessage = require('bitcoinjs-message')
+const TimeoutRequestsWindowTime = 5*60*1000;
 
-export class Mempool {
-
-    static instance = new Mempool();
-    TimeoutRequestsWindowTime = 5*60*1000;
+class Mempool {    
 
     constructor() {
+        if (!!Mempool.instance) {
+            return Mempool.instance;
+        }
+
+        Mempool.instance = this;
+
         this.mempool = [];
         this.timeoutRequests = [];
         // create confirmed wallets that can add stars
@@ -63,3 +67,5 @@ class ConfirmedEntry {
         this.status = status;
     }
 }
+
+module.exports.Mempool = Mempool;
