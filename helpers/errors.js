@@ -5,6 +5,7 @@ module.exports = {
         blockHasNoData: "Ops, i think you didn't provide data to be added to the block!",
         mempoolEntryNotFound: "Ops, entry with given wallet address is not found!",
         mempoolEntryWindowExpired: "Ops, validation window has expired!",
-        signatureInvalid: "Ops, provided signature is not valid!"
+        signatureInvalid: "Ops, provided signature is not valid!",
+        addressNotConfirmed: "Ops, address not confirmed!"
     }
 }

@@ -43,6 +43,15 @@ class Mempool {
         }
         return null;
     }
+
+    canAddStar(address) {
+        const confirmedEntry = this.confirmedEntries.filter(entry => entry.status.walletAddress === address)[0];   
+        return confirmedEntry ? confirmedEntry.registerStar === true : false;
+    }
+
+    deleteConfirmedEntry(address) {
+        this.confirmedEntries = this.confirmedEntries.filter(entry => entry.walletAddress !== address);
+    }
 }
 
 class MempoolEntry {

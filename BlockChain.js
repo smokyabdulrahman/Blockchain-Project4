@@ -59,6 +59,7 @@ class Blockchain {
         return this.bd.getLevelDBData(height);
     }
 
+
     // Validate if Block is being tampered by Block Height
     async validateBlock(height) {
         // get block object

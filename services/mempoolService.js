@@ -1,4 +1,5 @@
-const Mempool = require('../Mempool').Mempool.instance;
+const MempoolClass = require('../Mempool').Mempool;
+const Mempool = new MempoolClass();
 const Errors = require('../helpers/errors');
 const { validationResult } = require('express-validator/check');
 
@@ -17,19 +18,19 @@ exports.addRequestValidation = (req, res) => {
 exports.validateRequest = (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty) {
-        res.send(422).json({ errors: errors.array() });
+        res.status(422).send({ errors: errors.array() });
     }
 
     const entry = Mempool.getMempoolEntry(req.body.address);
     if (!entry) {
-        res.send(400).json({ errors: {
+        res.status(400).send({ errors: {
                 "message": Errors.messages.mempoolEntryNotFound
             }
         });
     }
 
     if(!entry.verifyTimeLeft()) {
-        res.send(400).json({ errors: {
+        res.status(400).send({ errors: {
             "message": Errors.messages.mempoolEntryWindowExpired
             }
         });
@@ -38,11 +39,11 @@ exports.validateRequest = (req, res) => {
     // everything is fine now!
     const confirmedEntry = Mempool.validateRequest(req.body.address, req.body.signature);
     if(!confirmedEntry) {
-        res.send(400).json({ errors: {
+        res.status(400).send({ errors: {
             "message": Errors.messages.signatureInvalid
             }
         });
     }
 
-    res.send(200).json(confirmedEntry);
+    res.send(confirmedEntry);
 }

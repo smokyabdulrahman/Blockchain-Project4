@@ -11,15 +11,15 @@ To setup the project for review do the following:
 4. Go to http://localhost:8000.
 
 ## API Documentation
-There are 2 endpoints in this project:
-1. Create a new block -> __POST: /blockchain/__
+There are 4 endpoints in this project:
+1. Create a new block -> __POST: /block/__
 
 to test this use the following curl command:
 ```bash
 curl -X POST \
   http://localhost:8000/block/ \
   -H 'Content-Type: application/json' \
-  -d '{"data": "hello"}'
+  -d '{"address": "1PMA5dqwJfy2qX42gYKCkDLK9gnAwV9HF2", "star": {"dec": "68° 52 56.9", "ra": "16h 29m 1.0s", "story": "Found star using https://www.google.com/sky/"}}'
 ```
 
 2. Get a block using its height -> __GET: /blockchain/:blockId__
@@ -31,7 +31,32 @@ curl -X GET \
 ```
 i have given the endpoint __0__ which is the genesis block.
 
-3. Error handeling, there are 2 types of errors:
+3. Add a request validation -> __POST: /requestValidation__
+
+to test this use the following curl command:
+```bash
+curl -X POST \
+	http://localhost:8000/requestValidation \
+	-H 'Content-Type: application/json' \
+	-d '{"address": "1PMA5dqwJfy2qX42gYKCkDLK9gnAwV9HF2"}'
+```
+
+4. Validate message signature -> __POST: /message-signature/validate__
+
+to test this use the following curl command:
+```bash
+curl -X POST \
+	http://localhost:8000/message-signature/validate \
+	-H 'Content-Type: application/json' \
+	-d '{"address": "1PMA5dqwJfy2qX42gYKCkDLK9gnAwV9HF2", "signature": "PLEASE GENERATE THIS USING 5KktgEJW7y1sLoqsys8dBAcWqgm9uih1UaghANX8FnQQxVs4ZGw"}'
+```
+
+curl -X POST \
+	http://localhost:8000/message-signature/validate \
+	-H 'Content-Type: application/json' \
+	-d '{"address": "1PMA5dqwJfy2qX42gYKCkDLK9gnAwV9HF2", "signature": "HHL/lXAsGgZeHC4tFwn3clbhucSSDCDD0Fqz6ZSC6nbDzEa/v1TVOoUmK7f/U+X1wSfo0CQVdEnGJ9PIyZxgDwY="}'
+
+5. Error handeling, there are 2 types of errors:
    1. blockNotFound: this happens when you query a height that is not there yet.
    2. blockNotValid: when added block data causes a problem in the block creation function.
    3. blockHasNoData: when data is not provided

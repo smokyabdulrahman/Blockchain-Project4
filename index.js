@@ -9,6 +9,7 @@ app.use(bodyparser.json());
 app.use('/requestValidation', require('./routes/requestValidation'));
 app.use('/message-signature', require('./routes/requestValidation'));
 app.use('/block', require('./routes/blockchain'));
+app.use('/star', require('./routes/blockchain'));
 
 // Error handling
 app.use(function(err, req, res, next) {

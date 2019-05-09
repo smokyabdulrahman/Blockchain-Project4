@@ -3,6 +3,7 @@
 /===================================================*/
 
 const level = require('level');
+const _ = require('lodash');
 const chainDB = './chaindata';
 
 class LevelSandbox {
@@ -32,6 +33,21 @@ class LevelSandbox {
                 .on('error', err => rej(err))
                 .on('close', _ => res(height));
         })
+    }
+
+    queryDB(value, pathToValue) {
+        return new Promise((res, rej) => {
+            let queryResult = [];
+            this.db.createReadStream()
+                .on('data', data => {
+                    const returndValue = _.get(data.value, pathToValue);
+                    if (returndValue === value) {
+                        queryResult.push(data.value);
+                    }
+                })
+                .on('error', err => rej(err))
+                .on('close', _ => res(height));
+        });
     }
         
 
