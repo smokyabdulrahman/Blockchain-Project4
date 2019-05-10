@@ -13,9 +13,17 @@ exports.getBlock = function(req, res, next) {
 
 exports.getByHash = function(req, res, next) {
     const hash = req.params.hash;
+    
     blockchainInstance.getByHash(hash)
+        .then(data => data.length === 0 ? res.send({}) : res.send(data[0]))
+        .catch(err => next(err));
+}
+
+exports.getByAddress = function(req, res, next) {
+    const address = req.params.address;
+    blockchainInstance.getByAddress(address)
         .then(data => res.send(data))
-        .catch(err => next(new Error()));
+        .catch(err => next(err))
 }
 
 exports.createBlock = function(req, res, next) {    
@@ -26,7 +34,7 @@ exports.createBlock = function(req, res, next) {
         next(new Error(errors.messages.addressNotConfirmed));
     }
     
-    const newBlock = new block.Block(star);
+    const newBlock = new block.Block(req.body);
     blockchainInstance.addBlock(newBlock)
         .then(data => {
             MempoolInstance.deleteConfirmedEntry(address);

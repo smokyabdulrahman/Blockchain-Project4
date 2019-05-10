@@ -22,6 +22,12 @@ class Mempool {
     }
 
     addValidationRequest(walletAddress, requestTimeStamp) {
+        // TODO: CHECK IF THERE IS AN ENTRY BEFORE ADDING
+        const entry = this.getMempoolEntry(walletAddress);
+        if (entry) {
+            entry.verifyTimeLeft();
+            return entry;
+        }
         const mempoolEntry = new MempoolEntry(walletAddress, requestTimeStamp, TimeoutRequestsWindowTime);
         this.mempool.push(mempoolEntry);
         this.timeoutRequests[walletAddress]=setTimeout(() => this.removeValidationRequest(walletAddress), TimeoutRequestsWindowTime);

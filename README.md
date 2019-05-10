@@ -54,7 +54,10 @@ curl -X POST \
 curl -X POST \
 	http://localhost:8000/message-signature/validate \
 	-H 'Content-Type: application/json' \
-	-d '{"address": "1PMA5dqwJfy2qX42gYKCkDLK9gnAwV9HF2", "signature": "HHL/lXAsGgZeHC4tFwn3clbhucSSDCDD0Fqz6ZSC6nbDzEa/v1TVOoUmK7f/U+X1wSfo0CQVdEnGJ9PIyZxgDwY="}'
+	-d '{"address": "1PMA5dqwJfy2qX42gYKCkDLK9gnAwV9HF2", "signature": "G3CmYz+BvONk8pKUkZG1Sxm993TErLRBOQOXMtHrdKHIuazc4KSvmdO3XwBrUX/aSYueWxq8xqkmrv05Cd+zv5o="}'
+
+curl -X GET \
+  http://localhost:8000/star/address:1PMA5dqwJfy2qX42gYKCkDLK9gnAwV9HF2
 
 5. Error handeling, there are 2 types of errors:
    1. blockNotFound: this happens when you query a height that is not there yet.

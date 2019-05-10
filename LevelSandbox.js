@@ -40,13 +40,14 @@ class LevelSandbox {
             let queryResult = [];
             this.db.createReadStream()
                 .on('data', data => {
-                    const returndValue = _.get(data.value, pathToValue);
+                    const parsedData = JSON.parse(data.value);
+                    const returndValue = _.get(parsedData, pathToValue);                    
                     if (returndValue === value) {
-                        queryResult.push(data.value);
+                        queryResult.push(parsedData);
                     }
                 })
                 .on('error', err => rej(err))
-                .on('close', _ => res(height));
+                .on('close', _ => res(queryResult));
         });
     }
         
