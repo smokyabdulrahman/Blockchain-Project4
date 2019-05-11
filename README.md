@@ -54,7 +54,7 @@ curl -X POST \
 curl -X POST \
 	http://localhost:8000/message-signature/validate \
 	-H 'Content-Type: application/json' \
-	-d '{"address": "1PMA5dqwJfy2qX42gYKCkDLK9gnAwV9HF2", "signature": "G3CmYz+BvONk8pKUkZG1Sxm993TErLRBOQOXMtHrdKHIuazc4KSvmdO3XwBrUX/aSYueWxq8xqkmrv05Cd+zv5o="}'
+	-d '{"address": "1PMA5dqwJfy2qX42gYKCkDLK9gnAwV9HF2", "signature": "G5O5JjsJGaZtTYj5xlUtm3ZofF3g33rUCIZ7DfnhWE1oV+11CVtGXJim4kBhLoRiFy5rWCCIiuMohq2ju/3/2CU="}'
 
 curl -X GET \
   http://localhost:8000/star/address:1PMA5dqwJfy2qX42gYKCkDLK9gnAwV9HF2

@@ -7,7 +7,10 @@ const errors = require('../helpers/errors');
 
 exports.getBlock = function(req, res, next) {
     blockchainInstance.getBlock(req.params.blockId)
-        .then(data => res.send(data))
+        .then(data => {
+            data = decodeStarStroy(JSON.parse(data));
+            res.send(data);
+        })
         .catch(err => next(new Error(errors.messages.blockNotFound)));
 }
 
@@ -15,15 +18,25 @@ exports.getByHash = function(req, res, next) {
     const hash = req.params.hash;
     
     blockchainInstance.getByHash(hash)
-        .then(data => data.length === 0 ? res.send({}) : res.send(data[0]))
+        .then(data => {
+            if(data.length === 0) {
+                res.send({});
+            } else {
+                data[0] = decodeStarStroy(data[0]);
+                res.send(data[0]);
+            }
+        })
         .catch(err => next(err));
 }
 
 exports.getByAddress = function(req, res, next) {
     const address = req.params.address;
     blockchainInstance.getByAddress(address)
-        .then(data => res.send(data))
-        .catch(err => next(err))
+        .then(data => {
+            data = data.map(entry => decodeStarStroy(entry));
+            res.send(data);
+        })
+        .catch(err => next(err));
 }
 
 exports.createBlock = function(req, res, next) {    
@@ -34,6 +47,8 @@ exports.createBlock = function(req, res, next) {
         next(new Error(errors.messages.addressNotConfirmed));
     }
     
+    req.body.star.story = Buffer.from(req.body.star.story).toString('hex');
+
     const newBlock = new block.Block(req.body);
     blockchainInstance.addBlock(newBlock)
         .then(data => {
@@ -41,4 +56,13 @@ exports.createBlock = function(req, res, next) {
             res.send(data);
         })
         .catch(err => next(new Error(errors.messages.blockNotValid)));
+}
+
+function decodeStarStroy(block) {
+    if (block.body.star) {
+        if (block.body.star.story) {
+            block.body.star.story = Buffer.from(block.body.star.story, 'hex').toString();
+        }
+    }
+    return block;
 }
