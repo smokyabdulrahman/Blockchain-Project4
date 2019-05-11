@@ -11,7 +11,7 @@ To setup the project for review do the following:
 4. Go to http://localhost:8000.
 
 ## API Documentation
-There are 4 endpoints in this project:
+There are 6 endpoints in this project:
 1. Create a new block -> __POST: /block/__
 
 to test this use the following curl command:
@@ -51,18 +51,31 @@ curl -X POST \
 	-d '{"address": "1PMA5dqwJfy2qX42gYKCkDLK9gnAwV9HF2", "signature": "PLEASE GENERATE THIS USING 5KktgEJW7y1sLoqsys8dBAcWqgm9uih1UaghANX8FnQQxVs4ZGw"}'
 ```
 
+5. Get blocks by hash -> __GET: /star/hash::hash__
+
+to test this use the following curl command:
+```bash
 curl -X POST \
-	http://localhost:8000/message-signature/validate \
-	-H 'Content-Type: application/json' \
-	-d '{"address": "1PMA5dqwJfy2qX42gYKCkDLK9gnAwV9HF2", "signature": "G5O5JjsJGaZtTYj5xlUtm3ZofF3g33rUCIZ7DfnhWE1oV+11CVtGXJim4kBhLoRiFy5rWCCIiuMohq2ju/3/2CU="}'
+	http://localhost:8000/star/hash:TYPE_ANY_HASH_HERE
+```
 
-curl -X GET \
-  http://localhost:8000/star/address:1PMA5dqwJfy2qX42gYKCkDLK9gnAwV9HF2
+6. Get blocks by wallet address -> __GET: /star/address::address__
 
-5. Error handeling, there are 2 types of errors:
+to test this use the following curl command:
+```bash
+curl -X POST \
+	http://localhost:8000/star/address:1PMA5dqwJfy2qX42gYKCkDLK9gnAwV9HF2
+```
+
+
+## Error handeling, there are 7 types of errors:
    1. blockNotFound: this happens when you query a height that is not there yet.
    2. blockNotValid: when added block data causes a problem in the block creation function.
    3. blockHasNoData: when data is not provided
+   4. mempoolEntryNotFound: while validating the sent signature for a given wallet. If no entry was found related to such wallet, this error is raised.
+   5. mempoolEntryWindowExpired: straight forward.
+   6. signatureInvalid: when provided signature is not valid.
+   7. addressNotConfirmed: when trying to add a block with given wallet. However, there is no confirmed requrests for it.
 
 ## Testing the project
 
@@ -157,3 +170,4 @@ This function validates the whole chain and return a list of errors found during
 * I was able to identify the basic data model for a Blockchain application.
 * I was able to use LevelDB to persist the Blockchain data.
 * I was able to write algorithms for basic operations in the Blockchain.
+* I was able to write a flow for authorizing wallets to contribute to the block.
