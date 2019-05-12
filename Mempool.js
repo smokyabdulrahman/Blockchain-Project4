@@ -56,7 +56,7 @@ class Mempool {
     }
 
     deleteConfirmedEntry(address) {
-        this.confirmedEntries = this.confirmedEntries.filter(entry => entry.walletAddress !== address);
+        this.confirmedEntries = this.confirmedEntries.filter(entry => entry.status.walletAddress !== address);
     }
 }
 
