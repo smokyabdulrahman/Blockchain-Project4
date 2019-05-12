@@ -12,7 +12,7 @@ app.use('/block', require('./routes/blockchain'));
 app.use('/star', require('./routes/blockchain'));
 
 // Error handling
-app.use(function(req, res, next) {
+app.use(function(err, req, res, next) {
     res.status(400).send({
         message: err.message,
         code: 400

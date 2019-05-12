@@ -61,7 +61,7 @@ exports.createBlock = function(req, res, next) {
 function decodeStarStroy(block) {
     if (block.body.star) {
         if (block.body.star.story) {
-            block.body.star.story = Buffer.from(block.body.star.story, 'hex').toString();
+            block.body.star.storyDecoded = Buffer.from(block.body.star.story, 'hex').toString();
         }
     }
     return block;
