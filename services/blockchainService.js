@@ -44,7 +44,7 @@ exports.createBlock = function(req, res, next) {
     const canAddStar = MempoolInstance.canAddStar(address);
     
     if (!canAddStar) {
-        next(new Error(errors.messages.addressNotConfirmed));
+        return next(new Error(errors.messages.addressNotConfirmed));
     }
     
     req.body.star.story = Buffer.from(req.body.star.story).toString('hex');
